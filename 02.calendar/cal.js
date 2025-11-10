@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
+import dayjs from "dayjs";
 
 const options = minimist(process.argv.slice(2));
 const year = options.y;
@@ -8,10 +9,7 @@ const month = options.m === undefined ? undefined : options.m - 1;
 const calendar = generateCalendar({ year, month });
 console.log(calendar.join("\n"));
 
-function generateCalendar({
-  year = new Date().getFullYear(),
-  month = new Date().getMonth(),
-}) {
+function generateCalendar({ year = dayjs().year(), month = dayjs().month() }) {
   return [
     `      ${month + 1}月 ${year}`,
     "日 月 火 水 木 金 土",
@@ -20,12 +18,12 @@ function generateCalendar({
 }
 
 function body(year, month) {
-  const firstDate = new Date(year, month, 1);
-  const lastDate = new Date(year, month + 1, 0);
-  const blanks = Array.from({ length: firstDate.getDay() }, () => null);
+  const first = dayjs().year(year).month(month).date(1);
+  const blanks = Array.from({ length: first.day() }, () => null);
+  const daysInMonth = first.daysInMonth();
   const fullDays = [
     ...blanks,
-    ...Array.from({ length: lastDate.getDate() }, (_, i) => i + 1),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
   const format = function (n) {
     return String(n ?? "").padStart(2, " ");
