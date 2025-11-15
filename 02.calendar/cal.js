@@ -29,7 +29,7 @@ function createBodyLines(year, month) {
     ...blanks,
     ...Array.from({ length: first.daysInMonth() }, (_, i) => i + 1),
   ];
-  return chunk(fullDays, 7).map(function (days) {
+  return chunk(fullDays, 7).map((days) => {
     return days
       .map((day) => {
         return String(day ?? "").padStart(2, " ");
