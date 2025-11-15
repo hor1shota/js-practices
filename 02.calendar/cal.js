@@ -28,9 +28,6 @@ function createBodyLines(year, month) {
     ...blanks,
     ...Array.from({ length: first.daysInMonth() }, (_, i) => i + 1),
   ];
-  const format = function (n) {
-    return String(n ?? "").padStart(2, " ");
-  };
   const eachSlice = function (array, size) {
     const result = [];
     for (let i = 0; i < array.length; i += size) {
@@ -39,6 +36,10 @@ function createBodyLines(year, month) {
     return result;
   };
   return eachSlice(fullDays, 7).map(function (days) {
-    return days.map(format).join(" ");
+    return days
+      .map((day) => {
+        return String(day ?? "").padStart(2, " ");
+      })
+      .join(" ");
   });
 }
