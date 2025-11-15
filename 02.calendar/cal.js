@@ -4,12 +4,12 @@ import minimist from "minimist";
 import dayjs from "dayjs";
 
 const options = minimist(process.argv.slice(2));
-const year = options.y;
-const month = "m" in options ? options.m - 1 : undefined;
+const year = "y" in options ? options.y : dayjs().year();
+const month = "m" in options ? options.m - 1 : dayjs().month();
 const calendar = generateCalendarLines(year, month);
 console.log(calendar.join("\n"));
 
-function generateCalendarLines(year = dayjs().year(), month = dayjs().month()) {
+function generateCalendarLines(year, month) {
   return [
     `      ${month + 1}月 ${year}`,
     "日 月 火 水 木 金 土",
