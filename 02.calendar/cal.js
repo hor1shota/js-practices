@@ -3,6 +3,7 @@
 import minimist from "minimist";
 import dayjs from "dayjs";
 import arraySupport from "dayjs/plugin/arraySupport.js";
+import chunk from "lodash/chunk.js";
 
 dayjs.extend(arraySupport);
 
@@ -28,14 +29,7 @@ function createBodyLines(year, month) {
     ...blanks,
     ...Array.from({ length: first.daysInMonth() }, (_, i) => i + 1),
   ];
-  const eachSlice = function (array, size) {
-    const result = [];
-    for (let i = 0; i < array.length; i += size) {
-      result.push(array.slice(i, i + size));
-    }
-    return result;
-  };
-  return eachSlice(fullDays, 7).map(function (days) {
+  return chunk(fullDays, 7).map(function (days) {
     return days
       .map((day) => {
         return String(day ?? "").padStart(2, " ");
