@@ -6,10 +6,13 @@ import dayjs from "dayjs";
 const options = minimist(process.argv.slice(2));
 const year = options.y;
 const month = "m" in options ? options.m - 1 : undefined;
-const calendar = generateCalendar({ year, month });
+const calendar = generateCalendarLines({ year, month });
 console.log(calendar.join("\n"));
 
-function generateCalendar({ year = dayjs().year(), month = dayjs().month() }) {
+function generateCalendarLines({
+  year = dayjs().year(),
+  month = dayjs().month(),
+}) {
   return [
     `      ${month + 1}月 ${year}`,
     "日 月 火 水 木 金 土",
