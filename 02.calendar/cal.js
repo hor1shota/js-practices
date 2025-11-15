@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 const options = minimist(process.argv.slice(2));
 const year = options.y;
-const month = options.m === undefined ? undefined : options.m - 1;
+const month = "m" in options ? options.m - 1 : undefined;
 const calendar = generateCalendar({ year, month });
 console.log(calendar.join("\n"));
 
