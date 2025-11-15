@@ -7,17 +7,6 @@ import chunk from "lodash/chunk.js";
 
 dayjs.extend(arraySupport);
 
-const options = minimist(process.argv.slice(2));
-const now = dayjs();
-const year = "y" in options ? options.y : now.year();
-const month = "m" in options ? options.m - 1 : now.month();
-const calendar = generateCalendarLines(year, month);
-console.log(calendar.join("\n"));
-
-function generateCalendarLines(year, month) {
-  return [...createHeaderLines(year, month), ...createBodyLines(year, month)];
-}
-
 function createHeaderLines(year, month) {
   return [`      ${month + 1}月 ${year}`, "日 月 火 水 木 金 土"];
 }
@@ -37,3 +26,14 @@ function createBodyLines(year, month) {
       .join(" ");
   });
 }
+
+function generateCalendarLines(year, month) {
+  return [...createHeaderLines(year, month), ...createBodyLines(year, month)];
+}
+
+const options = minimist(process.argv.slice(2));
+const now = dayjs();
+const year = "y" in options ? options.y : now.year();
+const month = "m" in options ? options.m - 1 : now.month();
+const calendar = generateCalendarLines(year, month);
+console.log(calendar.join("\n"));
