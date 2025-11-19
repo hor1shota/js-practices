@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { openDB, run, all } from "./common.js";
+import { openDB, run, all } from "../common.js";
 
 openDB()
   .then((db) => {

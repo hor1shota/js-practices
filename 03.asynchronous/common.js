@@ -1,0 +1,39 @@
+import sqlite3 from "sqlite3";
+
+function openDB() {
+  return new Promise((resolve) => {
+    const db = new sqlite3.Database(":memory:", () => resolve(db));
+  });
+}
+
+function run(db, sql, params) {
+  return new Promise((resolve) => {
+    if (params) {
+      db.run(sql, params, function (error) {
+        if (error) {
+          console.error(error.message);
+        } else {
+          console.log(this.lastID);
+        }
+        resolve();
+      });
+    } else {
+      db.run(sql, () => resolve(db));
+    }
+  });
+}
+
+function all(db, sql) {
+  return new Promise((resolve) => {
+    db.all(sql, (error, rows) => {
+      if (error) {
+        console.error(error.message);
+      } else {
+        rows.forEach((row) => console.log(row));
+      }
+      resolve(db);
+    });
+  });
+}
+
+export { openDB, run, all };
