@@ -24,4 +24,7 @@ openDB()
   })
   .then((db) => {
     db.close();
+  })
+  .catch((error) => {
+    console.error(error.message);
   });
