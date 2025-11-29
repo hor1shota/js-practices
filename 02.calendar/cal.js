@@ -13,9 +13,9 @@ function createHeaderLines(year, month) {
 
 function createBodyLines(year, month) {
   const firstDate = dayjs([year, month, 1]);
-  const blanks = Array(firstDate.day());
+  const paddingDays = Array(firstDate.day());
   const fullDays = [
-    ...blanks,
+    ...paddingDays,
     ...Array.from({ length: firstDate.daysInMonth() }, (_, i) => i + 1),
   ];
   return chunk(fullDays, 7).map((days) => {
