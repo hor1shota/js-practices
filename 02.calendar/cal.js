@@ -12,11 +12,11 @@ function createHeaderLines(year, month) {
 }
 
 function createBodyLines(year, month) {
-  const first = dayjs([year, month, 1]);
-  const blanks = Array(first.day());
+  const firstDate = dayjs([year, month, 1]);
+  const blanks = Array(firstDate.day());
   const fullDays = [
     ...blanks,
-    ...Array.from({ length: first.daysInMonth() }, (_, i) => i + 1),
+    ...Array.from({ length: firstDate.daysInMonth() }, (_, i) => i + 1),
   ];
   return chunk(fullDays, 7).map((days) => {
     return days
