@@ -14,7 +14,7 @@ const db = new sqlite3.Database(":memory:", () => {
           count--;
 
           if (count === 0) {
-            db.all("SELECT id, title FROM books", (err, rows) => {
+            db.all("SELECT id, title FROM books", (_, rows) => {
               rows.forEach((row) => {
                 console.log(row);
               });
