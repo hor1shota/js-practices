@@ -19,19 +19,20 @@ const db = new sqlite3.Database(":memory:", () => {
           count--;
           if (count === 0) {
             db.all("SELECT id, title, content FROM books", (err, rows) => {
+              const dropAndClose = () => {
+                db.run("DROP TABLE books", () => {
+                  db.close();
+                });
+              };
+
               if (err) {
                 console.error(err.message);
-                db.run("DROP TABLE books", () => {
-                  db.close();
-                });
-              } else {
-                rows.forEach((row) => {
-                  console.log(row);
-                });
-                db.run("DROP TABLE books", () => {
-                  db.close();
-                });
+                return dropAndClose();
               }
+
+              rows.forEach((row) => console.log(row));
+
+              dropAndClose();
             });
           }
         });
