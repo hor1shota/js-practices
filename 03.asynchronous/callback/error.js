@@ -11,12 +11,12 @@ const db = new sqlite3.Database(":memory:", () => {
       titles.forEach((title) => {
         db.run("INSERT INTO books (title) VALUES (?)", [title], function (err) {
           if (err) {
-            console.error(err.message);
-          } else {
-            console.log(this.lastID);
+            return console.error(err.message);
           }
 
+          console.log(this.lastID);
           count--;
+
           if (count === 0) {
             db.all("SELECT id, title, content FROM books", (err, rows) => {
               const dropAndClose = () => {
