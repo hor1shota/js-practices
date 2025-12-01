@@ -14,19 +14,27 @@ import { openDB, run, all, close } from "../sqlite-helpers.js";
   for (const title of titles) {
     try {
       await run(db, "INSERT INTO books (title) VALUES (?)", [title]);
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      if (err.code === "SQLITE_CONSTRAINT") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
     }
   }
 
   try {
-    const rows = await all(db, "SELECT id, title FROM books");
+    const rows = await all(db, "SELECT id, title, content FROM books");
 
     rows.forEach((row) => {
       console.log(row);
     });
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    if (err.code === "SQLITE_ERROR") {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
   }
 
   await run(db, "DROP TABLE books");
