@@ -1,9 +1,9 @@
 import sqlite3 from "sqlite3";
 
 function openDB() {
-  return new Promise((resolve) => {
-    const db = new sqlite3.Database(":memory:", () => {
-      resolve(db);
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(":memory:", (err) => {
+      err ? reject(err) : resolve(db);
     });
   });
 }
