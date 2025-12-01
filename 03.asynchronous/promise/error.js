@@ -20,15 +20,7 @@ openDB()
 
     return Promise.all(promises);
   })
-  .then(() => {
-    return all(db, "SELECT id, title, content FROM books");
-  })
-  .then(() => {
-    return run(db, "DROP TABLE books");
-  })
-  .then(() => {
-    return close(db);
-  })
-  .catch((error) => {
-    console.error(error.message);
-  });
+  .then(() => all(db, "SELECT id, title, content FROM books"))
+  .then(() => run(db, "DROP TABLE books"))
+  .then(() => close(db))
+  .catch((error) => console.error(error.message));

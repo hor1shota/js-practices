@@ -20,12 +20,6 @@ openDB()
 
     return Promise.all(promises);
   })
-  .then(() => {
-    return all(db, "SELECT id, title FROM books");
-  })
-  .then(() => {
-    return run(db, "DROP TABLE books");
-  })
-  .then(() => {
-    return close(db);
-  });
+  .then(() => all(db, "SELECT id, title FROM books"))
+  .then(() => run(db, "DROP TABLE books"))
+  .then(() => close(db));
