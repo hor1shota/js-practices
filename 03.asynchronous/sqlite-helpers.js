@@ -8,32 +8,23 @@ export function openDB() {
   });
 }
 
-export function run(db, sql, params) {
+export function run(db, sql, params = []) {
   return new Promise((resolve, reject) => {
-    if (params) {
-      db.run(sql, params, function (error) {
-        if (error) {
-          reject(error);
-        } else {
-          console.log(this.lastID);
-        }
-        resolve();
-      });
-    } else {
-      db.run(sql, () => resolve());
-    }
+    const callback = function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve({ lastID: this.lastID, changes: this.changes });
+    };
+
+    db.run(sql, params, callback);
   });
 }
 
-export function all(db, sql) {
+export function all(db, sql, params = []) {
   return new Promise((resolve, reject) => {
-    db.all(sql, (error, rows) => {
-      if (error) {
-        reject(error);
-      } else {
-        rows.forEach((row) => console.log(row));
-      }
-      resolve();
+    db.all(sql, params, (err, rows) => {
+      err ? reject(err) : resolve(rows);
     });
   });
 }

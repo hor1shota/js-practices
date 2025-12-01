@@ -20,12 +20,16 @@ import { openDB, run, all, close } from "../sqlite-helpers.js";
   }
 
   try {
-    await all(db, "SELECT id, title, content FROM books");
+    const rows = await all(db, "SELECT id, title FROM books");
+
+    rows.forEach((row) => {
+      console.log(row);
+    });
   } catch (error) {
     console.error(error.message);
   }
 
   await run(db, "DROP TABLE books");
 
-  await close();
+  await close(db);
 })();

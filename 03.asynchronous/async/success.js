@@ -11,13 +11,25 @@ import { openDB, run, all, close } from "../sqlite-helpers.js";
   );
 
   const titles = ["本A", "本B", "本C", "本D"];
+  let results = [];
+
   for (const title of titles) {
-    await run(db, "INSERT INTO books (title) VALUES (?)", [title]);
+    results.push(
+      await run(db, "INSERT INTO books (title) VALUES (?)", [title]),
+    );
   }
 
-  await all(db, "SELECT id, title FROM books");
+  results.forEach((result) => {
+    console.log(result.lastID);
+  });
+
+  const rows = await all(db, "SELECT id, title FROM books");
+
+  rows.forEach((row) => {
+    console.log(row);
+  });
 
   await run(db, "DROP TABLE books");
 
-  await close();
+  await close(db);
 })();
