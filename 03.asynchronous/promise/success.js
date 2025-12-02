@@ -31,6 +31,7 @@ openDB()
     rows.forEach((row) => {
       console.log(row);
     });
-    run(db, "DROP TABLE books");
+
+    return run(db, "DROP TABLE books");
   })
   .then(() => close(db));
