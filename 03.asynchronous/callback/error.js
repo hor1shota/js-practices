@@ -11,7 +11,11 @@ const db = new sqlite3.Database(":memory:", () => {
       titles.forEach((title) => {
         db.run("INSERT INTO books (title) VALUES (?)", [title], function (err) {
           if (err) {
-            return console.error(err.message);
+            console.error(err.message);
+            db.run("DROP TABLE books", () => {
+              db.close();
+            });
+            return;
           }
 
           console.log(this.lastID);
@@ -27,12 +31,14 @@ const db = new sqlite3.Database(":memory:", () => {
 
               if (err) {
                 console.error(err.message);
-                return dropAndClose();
+                dropAndClose();
+                return;
               }
 
               rows.forEach((row) => console.log(row));
 
               dropAndClose();
+              return;
             });
           }
         });
