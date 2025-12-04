@@ -10,7 +10,6 @@ await run(
 );
 
 let results = [];
-let errors = [];
 const titles = ["本A", "本B", "本C", "本D", "本A"];
 
 for (const title of titles) {
@@ -20,7 +19,7 @@ for (const title of titles) {
     );
   } catch (err) {
     if (err.code === "SQLITE_CONSTRAINT") {
-      errors.push(err.message);
+      console.error(err.message);
     } else {
       throw err;
     }
@@ -29,10 +28,6 @@ for (const title of titles) {
 
 results.forEach((result) => {
   console.log(result.lastID);
-});
-
-errors.forEach((err) => {
-  console.error(err);
 });
 
 try {
