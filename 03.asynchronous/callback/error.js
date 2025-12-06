@@ -6,34 +6,23 @@ const db = new sqlite3.Database(":memory:", () => {
   db.run(
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     () => {
-      const titles = ["本A", "本B", "本C", "本D", "本A"];
-      let count = titles.length;
-      titles.forEach((title) => {
-        db.run("INSERT INTO books (title) VALUES (?)", [title], function (err) {
-          err ? console.error(err.message) : console.log(this.lastID);
+      db.run("INSERT INTO books (title) VALUES (?)", [], function (err) {
+        if (err) {
+          console.error(err.message);
+        } else {
+          console.log(this.lastID);
+        }
 
-          count--;
-
-          if (count === 0) {
-            db.all("SELECT id, title, content FROM books", (err, rows) => {
-              const dropAndClose = () => {
-                db.run("DROP TABLE books", () => {
-                  db.close();
-                });
-              };
-
-              if (err) {
-                console.error(err.message);
-                dropAndClose();
-                return;
-              }
-
-              rows.forEach((row) => console.log(row));
-
-              dropAndClose();
-              return;
-            });
+        db.get("SELECT id, title, content FROM books", (err, row) => {
+          if (err) {
+            console.error(err.message);
+          } else {
+            console.log(row);
           }
+
+          db.run("DROP TABLE books", () => {
+            db.close();
+          });
         });
       });
     },
