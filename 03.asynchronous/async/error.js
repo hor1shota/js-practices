@@ -14,7 +14,7 @@ try {
 
   console.log(result.lastID);
 } catch (err) {
-  if (err.code === "SQLITE_CONSTRAINT") {
+  if (err?.code === "SQLITE_CONSTRAINT") {
     console.error(err.message);
   } else {
     throw err;
@@ -24,7 +24,7 @@ try {
 try {
   console.log(await get(db, "SELECT id, title, content FROM books"));
 } catch (err) {
-  if (err.code === "SQLITE_ERROR") {
+  if (err?.code === "SQLITE_ERROR") {
     console.error(err.message);
   } else {
     throw err;
