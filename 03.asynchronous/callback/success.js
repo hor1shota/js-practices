@@ -8,8 +8,10 @@ const db = new sqlite3.Database(":memory:", () => {
     () => {
       db.run("INSERT INTO books (title) VALUES (?)", ["本A"], function () {
         console.log(this.lastID);
+
         db.get("SELECT id, title FROM books", (_, row) => {
           console.log(row);
+
           db.run("DROP TABLE books", () => {
             db.close();
           });
