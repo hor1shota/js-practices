@@ -12,7 +12,7 @@ export function openDb(filename) {
   });
 }
 
-export function run(db, sql, params = []) {
+export function run(db, sql, params) {
   return new Promise((resolve, reject) => {
     const callback = function (err) {
       if (err) {
@@ -26,7 +26,7 @@ export function run(db, sql, params = []) {
   });
 }
 
-export function get(db, sql, params = []) {
+export function get(db, sql, params) {
   return new Promise((resolve, reject) => {
     db.get(sql, params, (err, row) => {
       if (err) {
