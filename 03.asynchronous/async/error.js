@@ -10,7 +10,7 @@ await run(
 );
 
 try {
-  const result = await run(db, "INSERT INTO books (title) VALUES (?)", []);
+  const result = await run(db, "INSERT INTO books (title) VALUES (?)", [null]);
 
   console.log(result.lastID);
 } catch (err) {

@@ -14,7 +14,7 @@ openDB()
     );
   })
   .then(() => {
-    return run(db, "INSERT INTO books (title) VALUES (?)", []);
+    return run(db, "INSERT INTO books (title) VALUES (?)", [null]);
   })
   .then(
     (result) => {
