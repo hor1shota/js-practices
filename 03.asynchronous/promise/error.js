@@ -13,9 +13,7 @@ openDB()
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
   })
-  .then(() => {
-    return run(db, "INSERT INTO books (title) VALUES (?)", [null]);
-  })
+  .then(() => run(db, "INSERT INTO books (title) VALUES (?)", [null]))
   .then((result) => {
     console.log(result.lastID);
 
