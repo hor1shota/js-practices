@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { openDB, run, get, close } from "../sqlite-helpers.js";
+import { openDb, run, get, close } from "../sqlite-helpers.js";
 
 let db;
 
-openDB(":memory:")
+openDb(":memory:")
   .then((tmpDb) => {
     db = tmpDb;
 

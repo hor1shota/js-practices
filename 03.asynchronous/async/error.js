@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { openDB, run, get, close } from "../sqlite-helpers.js";
+import { openDb, run, get, close } from "../sqlite-helpers.js";
 
-const db = await openDB(":memory:");
+const db = await openDb(":memory:");
 
 await run(
   db,
