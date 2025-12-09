@@ -13,7 +13,9 @@ const result = await run(db, "INSERT INTO books (title) VALUES (?)", ["本A"]);
 
 console.log(result.lastID);
 
-console.log(await get(db, "SELECT id, title FROM books"));
+const row = await get(db, "SELECT id, title FROM books");
+
+console.log(row);
 
 await run(db, "DROP TABLE books");
 

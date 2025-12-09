@@ -22,7 +22,9 @@ try {
 }
 
 try {
-  console.log(await get(db, "SELECT id, title, content FROM books"));
+  const row = await get(db, "SELECT id, title, content FROM books");
+
+  console.log(row);
 } catch (err) {
   if (err?.code === "SQLITE_ERROR") {
     console.error(err.message);
