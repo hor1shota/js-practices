@@ -4,7 +4,7 @@ import { openDB, run, get, close } from "../sqlite-helpers.js";
 
 let db;
 
-openDB()
+openDB(":memory:")
   .then((tmpDb) => {
     db = tmpDb;
 

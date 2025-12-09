@@ -2,7 +2,7 @@
 
 import { openDB, run, get, close } from "../sqlite-helpers.js";
 
-const db = await openDB();
+const db = await openDB(":memory:");
 
 await run(
   db,
