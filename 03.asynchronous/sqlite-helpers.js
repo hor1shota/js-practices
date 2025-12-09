@@ -14,15 +14,13 @@ export function openDb(filename) {
 
 export function run(db, sql, params) {
   return new Promise((resolve, reject) => {
-    const callback = function (err) {
+    db.run(sql, params, function (err) {
       if (err) {
         reject(err);
       } else {
         resolve({ lastID: this.lastID, changes: this.changes });
       }
-    };
-
-    db.run(sql, params, callback);
+    });
   });
 }
 
