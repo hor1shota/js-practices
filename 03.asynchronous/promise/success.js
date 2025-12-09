@@ -5,8 +5,8 @@ import { openDB, run, get, close } from "../sqlite-helpers.js";
 let db;
 
 openDB()
-  .then((_db) => {
-    db = _db;
+  .then((tmpDb) => {
+    db = tmpDb;
 
     return run(
       db,
