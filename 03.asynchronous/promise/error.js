@@ -16,22 +16,16 @@ openDb(":memory:")
   .then(() => run(db, "INSERT INTO books (title) VALUES (?)", [null]))
   .then((result) => {
     console.log(result.lastID);
-
-    return get(db, "SELECT id, title, content FROM books");
   })
   .catch((err) => {
     console.error(err.message);
-
-    return get(db, "SELECT id, title, content FROM books");
   })
+  .then(() => get(db, "SELECT id, title, content FROM books"))
   .then((row) => {
     console.log(row);
-
-    return run(db, "DROP TABLE books");
   })
   .catch((err) => {
     console.error(err.message);
-
-    return run(db, "DROP TABLE books");
   })
+  .then(() => run(db, "DROP TABLE books"))
   .then(() => close(db));
