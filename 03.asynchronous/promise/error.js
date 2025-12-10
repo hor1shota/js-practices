@@ -31,5 +31,7 @@ openDb(":memory:")
   })
   .catch((err) => {
     console.error(err.message);
+
+    return run(db, "DROP TABLE books");
   })
   .then(() => close(db));
