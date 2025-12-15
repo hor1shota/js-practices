@@ -12,6 +12,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@inquirer/prompts": "^8.1.0",
     "minimist": "^1.2.8",
     "sqlite3": "^5.1.7"
   }
