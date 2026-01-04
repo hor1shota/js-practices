@@ -8,7 +8,7 @@ export class Memo {
   }
 
   static async all() {
-    const rows = await all(this.db, "SELECT * FROM memos");
+    const rows = await all(this.db, "SELECT * FROM memos ORDER BY id");
     return rows.map((row) => new Memo(row));
   }
 
