@@ -17,22 +17,12 @@ export class MemosController {
   }
 
   async show() {
-    const memos = await Memo.all();
-    const id = await this.#chooseMemoId(
-      memos,
-      "Choose a note you want to see:",
-    );
-    const memo = await Memo.find(id);
+    const memo = await this.#chooseMemo("Choose a note you want to see:");
     console.log(`${memo.title}\n${memo.body}`);
   }
 
   async destroy() {
-    const memos = await Memo.all();
-    const id = await this.#chooseMemoId(
-      memos,
-      "Choose a memo you want to delete:",
-    );
-    const memo = await Memo.find(id);
+    const memo = await this.#chooseMemo("Choose a memo you want to delete:");
     await memo.destroy();
   }
 
@@ -52,5 +42,11 @@ export class MemosController {
   #chooseMemoId(memos, message) {
     const choices = memos.map((memo) => ({ name: memo.title, value: memo.id }));
     return select({ message: message, choices: choices });
+  }
+
+  async #chooseMemo(message) {
+    const memos = await Memo.all();
+    const id = await this.#chooseMemoId(memos, message);
+    return Memo.find(id);
   }
 }
