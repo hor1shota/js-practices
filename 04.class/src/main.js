@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
+import { Database } from "./database.js";
 import { Memo } from "./memo.js";
 import { MemosController } from "./memos-controller.js";
-import { openDb, run, close } from "./sqlite-helpers.js";
 
-const db = await openDb("memo.db");
-await run(
-  db,
+const db = await Database.open("memo.db");
+
+await db.run(
   `
   CREATE TABLE IF NOT EXISTS memos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,6 +16,7 @@ await run(
   )
   `,
 );
+
 Memo.setDb(db);
 
 const flags = minimist(process.argv.slice(2));
@@ -31,4 +32,4 @@ if (flags.l) {
   await controller.create();
 }
 
-await close(db);
+await db.close();

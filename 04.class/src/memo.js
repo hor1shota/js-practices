@@ -1,5 +1,3 @@
-import { run, get, all } from "./sqlite-helpers.js";
-
 export class Memo {
   static db;
 
@@ -8,12 +6,12 @@ export class Memo {
   }
 
   static async all() {
-    const rows = await all(this.db, "SELECT * FROM memos ORDER BY id");
+    const rows = await this.db.all("SELECT * FROM memos ORDER BY id");
     return rows.map((row) => new Memo(row));
   }
 
   static async find(id) {
-    const row = await get(this.db, "SELECT * FROM memos WHERE id = (?)", [id]);
+    const row = await this.db.get("SELECT * FROM memos WHERE id = (?)", [id]);
     return new Memo(row);
   }
 
@@ -24,8 +22,7 @@ export class Memo {
   }
 
   async save() {
-    const result = await run(
-      this.constructor.db,
+    const result = await this.constructor.db.run(
       "INSERT INTO memos (title, body) VALUES (?, ?)",
       [this.title, this.body],
     );
@@ -34,8 +31,7 @@ export class Memo {
   }
 
   async destroy() {
-    const result = await run(
-      this.constructor.db,
+    const result = await this.constructor.db.run(
       "DELETE FROM memos WHERE id = (?)",
       [this.id],
     );
